@@ -9,7 +9,7 @@ g++ makeGen.cpp -o makeG
 
 # if there is not a directory arugment passed in
 # then print error, clean up and exit
-if [ ! $1 ] ; then
+if [ ! -d $1 ] ; then
     echo "Did not specify directory argument: ./makeGen [Directory Name]"
     rm makeG
     exit 0
