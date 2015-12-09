@@ -1,11 +1,8 @@
 #!/bin/sh
 
-# converts all files to unix based to eliminate the ^M character
-
 # converts all files in directory to unix to remove ^M
 # redirects the annoying dos2unix output into oblivion
 dos2unix $1/* 2> /dev/null
-
 
 # comp iles the makeGen cpp program
 g++ makeGen.cpp -o makeG
