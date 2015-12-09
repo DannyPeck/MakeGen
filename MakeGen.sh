@@ -4,14 +4,17 @@
 # redirects the annoying dos2unix output into oblivion
 dos2unix $1/* 2> /dev/null
 
-# comp iles the makeGen cpp program
-g++ makeGen.cpp -o makeG
+# allows the command to work from any directory from within the local user
+dir=$(echo $1 | sed 's/.*\///g')
+
+# compiles the makeGen cpp program might be to specific at the moment
+g++ /usr/local/bin/MakeGen/makeGen.cpp -o makeG
 
 # if there is not a directory arugment passed in
 # then print error, clean up and exit
-if [ ! -d $1 ] || [ ! $1 ] ; then
+if [ ! -d $(pwd)/$1 ] || [ ! $(pwd)/$1 ] ; then
     echo "Did not specify directory argument: ./makeGen [Directory Name]"
-    rm makeG
+    rm ./makeG
     exit 0
 # if they did pass us a directory then list all of the files and find the .cpp's 
 else
@@ -22,13 +25,13 @@ else
 	includes=$(grep -i "#include" $1/*.cpp | sed 's/.*>//g' | sed 's/#include//g' | sed 's/.*\///g' | sed 's/\"//g' | sed 's/: /:/g')
 
 	# runs the makeGen.cpp program with the cppFiles, include statements and directory argument
-	./makeG $cppFiles $includes $1
+	./makeG $cppFiles $includes $dir
 
 	# clean up the cpp program
-	rm makeG
+	rm ./makeG
 
 	# move the makefile into the given directory
-	mv makefile $1/
+	mv ./makefile $1/
 
 	# run the make command and back out
 	cd $1
@@ -36,7 +39,7 @@ else
 	cd $(pwd)
     else
 	echo "No .cpp files found in directory"
-	rm makeG
+	rm ./makeG
 	exit 0
     fi
 fi
