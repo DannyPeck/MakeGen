@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
 	    rootFiles.push_back(token);
 	}
     }
-    string mark = "#--------------------------------------------";
+    string mark = "#-------------------------------------------#";
     // We begin creating our makefile by creating the executable target
     string makefile = mark + "\n\n";
     makefile += createExeTarget(executableFile, rootFiles);
