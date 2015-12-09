@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
 	// for each rootFile, create a new target and append it to the makefile
 	makefile += createObjTarget(rootFiles.at(j), dependencies);
     }
-    
+
     // after the exeTarget and all objTargets have been created, add the clean target
     makefile += createCleanTarget(executableFile);
 

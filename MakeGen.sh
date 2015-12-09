@@ -1,7 +1,11 @@
 #!/bin/sh
 
 # converts all files to unix based to eliminate the ^M character
-sed -i 's/^M//g' $1/*
+if [command -v dos2unix >/dev/null 2>] ; then
+    dos2unix $1/*
+else
+    echo "does not exist"
+fi
 
 # comp iles the makeGen cpp program
 g++ makeGen.cpp -o makeG
