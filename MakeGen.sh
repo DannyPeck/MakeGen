@@ -36,5 +36,7 @@ else
 	cd $(pwd)
     else
 	echo "No .cpp files found in directory"
+	rm makeG
+	exit 0
     fi
 fi
