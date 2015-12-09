@@ -16,7 +16,7 @@ fi
 
 # this command searches all of the .cpp files for user created include statements (#include "Book.h")
 # and formats it into an exceptable format for passing into the makeGen c++ program for further parsing and manipulation
-includes=$(grep -i "#include" $1/*.cpp | sed 's/.*>//g' | sed 's/#include//g' | sed 's/\/r//g' | sed 's/.*\///g' | sed 's/\"//g' | sed 's/: /:/g')
+includes=$(grep -i "#include" $1/*.cpp | sed 's/.*>//g' | sed 's/#include//g' | sed 's/^M//g' | sed 's/.*\///g' | sed 's/\"//g' | sed 's/: /:/g')
 
 # runs the makeGen.cpp program with the cppFiles, include statements and directory argument
 ./makeG $cppFiles $includes $1
