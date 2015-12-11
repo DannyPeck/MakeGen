@@ -67,18 +67,27 @@ java() {
 	
 	mainPath=$(grep -i "static void main(" $1/*.java | sed 's/:.*//g');
 	
-	main=$(basename $mainPath)
+	main=$(basename $mainPath | sed 's/.java//g')
 
 	dir=$(basename $1)
 	
 	javaFlag="java"
 
 	./makeG $javaFlag $main $dir
-
+	
 	rm makeG
+
+	# move the makefile into the given directory
+	mv ./makefile $1/
+
+	# run the make command and back out
+	cd $1
+	make
+	cd $(pwd)
 
     else
 	echo "No .java files found in directory"
+	rm makeG
     fi
 
 }
