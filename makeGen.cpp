@@ -52,18 +52,17 @@ string createCleanTarget(string exeFile) {
 
 // takes in array of command line arguments
 int main(int argc, char** argv) {
-
     // stores them in a vector of fileNames
     vector<string> rootFiles;
     vector<string> cppFiles;
-    
+	
     // last arguement should be the directory name, which i will use for exe
     string executableFile = argv[argc-1]; 
-
+    
     // for each file in the vector, if it is a .cpp file add it to executable 
     int pos;
     string token;
-
+    
     // Represents each file we are searching through
     string fileName;
 
@@ -74,12 +73,12 @@ int main(int argc, char** argv) {
 	fileName = argv[i];
 	
 	/* 
-	This is a kind of hack, because both the include statements
-	and the .cpp files contain ".cpp" the first if statement removes
-	the include statement cases for the other if statement
+       This is a kind of hack, because both the include statements
+       and the .cpp files contain ".cpp" the first if statement removes
+       the include statement cases for the other if statement
 	*/
 	if((pos = fileName.find(".cpp:")) != string::npos){
-	
+	    
 	}
 
 	// if the string contains ".cpp"
@@ -143,6 +142,5 @@ int main(int argc, char** argv) {
     outFile.close();
 
     // Note: the script will take care of moving the makefile to specified directory and running make
-
     return 0;
 }

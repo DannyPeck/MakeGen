@@ -4,9 +4,7 @@
 # redirects the annoying dos2unix output into oblivion
 dos2unix $1/* 2> /dev/null
 
-# if there is not a directory arugment passed in
-# then print error, clean up and exit
-
+# runs a given argument through a series of checks
 sanitize() {
     if [ ! $1 ] ; then
 	echo "Did not specify directory arguement: MakeGen [Directory Name]"
@@ -20,11 +18,10 @@ sanitize() {
     fi
 }
 
-arg=""
-
+# Script code required to build the C++ makefiles
 cpp() {
     # compiles the makeGen cpp program might be to specific at the moment
-    g++ /usr/local/bin/MakeGen/makeGen.cpp -o makeG
+    g++ makeGen.cpp -o makeG
     
     cppFiles=$(ls -a $1 | grep .cpp)
 
@@ -37,8 +34,9 @@ cpp() {
 	# allows the command to work from any directory from within the local user
 	dir=$(basename $1)
 	
+	cppFlag="cpp"
 	# runs the makeGen.cpp program with the cppFiles, include statements and directory argument
-	./makeG "cpp" $cppFiles $includes $dir
+	./makeG $cppFlag $cppFiles $includes $dir
 	
 	# clean up the current directory
 	rm makeG
@@ -57,19 +55,27 @@ cpp() {
     fi
 }
 
+# Script code required to build a Java makefile
 java() {
+    
+    # compiles the makeGen cpp program might be to specific at the moment
+    g++ makeGen.cpp -o makeG
 
     javaFiles=$(ls -a $1 | grep .java)
     
     if [ ! -z "$javaFiles" ] ; then
 	
 	mainPath=$(grep -i "static void main(" $1/*.java | sed 's/:.*//g');
-
+	
 	main=$(basename $mainPath)
 
 	dir=$(basename $1)
+	
+	javaFlag="java"
 
-	./makeG "java" $main $dir
+	./makeG $javaFlag $main $dir
+
+	rm makeG
 
     else
 	echo "No .java files found in directory"
