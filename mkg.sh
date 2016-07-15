@@ -8,7 +8,7 @@ MKG="mkg"
 
 # name of the directory MakeGen builds from
 # default value = current directory
-DIR="./"
+DIR="."
 
 # name of the binary the Makefile will create
 # default value = a.out
@@ -69,8 +69,36 @@ validate_args ()
   fi
 }
 
+#######################################
+# Returns all of the dependencies
+# Globals:
+#   DIR
+# Arguments:
+#   None
+# Returns:
+#######################################
+get_dependencies ()
+{
+  CPP_FILES="$(ls $DIR/* | grep .cpp)"
+  H_FILES="$(ls $DIR/* | grep .h)"
+  FILES="$CPP_FILES
+        $H_FILES"
+
+  INCLUDES="$(grep "#include" $FILES \
+            | sed 's/[[:space:]]\+//g' \
+            | sed 's/.*>//g' \
+            | sed 's/.*\///g' \
+            | sed 's/#include//g' \
+            | sed 's/:.* /:/g' \
+            | sed 's/"//g' \
+            | sed 's/.cpp:/:/g' \
+            | sed 's/.h:/:/g')"
+  echo $INCLUDES
+}
+
 if validate_args; then
- echo "$DIR" "$EXENAME"
+ DEPENDENCIES=$(get_dependencies)
+ echo $DEPENDENCIES
 else
   exit 1
 fi
