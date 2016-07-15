@@ -92,13 +92,16 @@ get_dependencies ()
             | sed 's/:.* /:/g' \
             | sed 's/"//g' \
             | sed 's/.cpp:/:/g' \
-            | sed 's/.h:/:/g')"
+            | sed 's/.h:/:/g' \
+            | sort | uniq)"
   echo $INCLUDES
 }
 
 if validate_args; then
  DEPENDENCIES=$(get_dependencies)
- echo $DEPENDENCIES
+
+g++ mkg.cpp -o MakeG
+echo "$(./MakeG $DEPENDENCIES)"
 else
   exit 1
 fi
