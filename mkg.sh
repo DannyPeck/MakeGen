@@ -98,10 +98,9 @@ get_dependencies ()
 }
 
 if validate_args; then
- DEPENDENCIES=$(get_dependencies)
-
-g++ mkg.cpp -o MakeG
-echo "$(./MakeG $DEPENDENCIES)"
+  DEPENDENCIES=$(get_dependencies)
+  echo $DEPENDENCIES
+  # echo "$(./MakeG $DEPENDENCIES)"
 else
   exit 1
 fi
